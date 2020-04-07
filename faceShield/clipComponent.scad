@@ -1,5 +1,5 @@
 // Single Hook Upright Clip Component 
-EPSILON = 0.01; // For padding negative volumes to fix z-fighting
+PADDING = 0.01; // For padding negative volumes to fix z-fighting
 
 module hookHead(hookHeight, hookProtrusion, hookBottomAngle, thickness) {
     linear_extrude(height=clipWidth)
@@ -11,9 +11,9 @@ module hookHead(hookHeight, hookProtrusion, hookBottomAngle, thickness) {
 module cornerReinforcement(spaceBetweenWalls, clipWidth) {
     difference() {
         cube([clipWidth, spaceBetweenWalls, spaceBetweenWalls/2]);
-        translate([-EPSILON, spaceBetweenWalls/2, spaceBetweenWalls/2])
+        translate([-PADDING, spaceBetweenWalls/2, spaceBetweenWalls/2])
             rotate([0, 90, 0])
-            scale([1, 1, 1 + (2 * EPSILON)])
+            scale([1, 1, 1 + (2 * PADDING)])
             cylinder(h=clipWidth, r=spaceBetweenWalls/2);
     }
 }
