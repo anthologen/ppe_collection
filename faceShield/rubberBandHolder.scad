@@ -1,4 +1,13 @@
-// Rubber Band Holder
+/**
+ * Rubber Band Holder
+ * 
+ * A face shield component that clips into a basic hairband and holds a 
+ * rubberband in place.
+ *
+ * Meant to be clipped onto the back of a hairband with rubberbands to tighten
+ * a face shield. This clip assumes there is a slight bend on both ends of
+ * the hairband preventing the clip from slipping off.
+ */
 
 use <clipComponent.scad>;
 
@@ -39,6 +48,8 @@ module rubberBandHolderClip(doubleNotchParmList, clipParmList) {
     translate([0, 0, totalFrontWallHeight])
         doubleNotch(doubleNotchParmList);
 }
+
+// --- Parameters ---
 
 // Clip Component Parameters
 clipWidth = 5;

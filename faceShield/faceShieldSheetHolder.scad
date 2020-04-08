@@ -1,5 +1,15 @@
-// Face Shield Sheet Holder
-PADDING = 0.01; // padding value to extend negative volumes to fix z-fighting
+/**
+ * Face Shield Sheet Holder
+ * 
+ * A face shield component that clips into a basic hairband and holds a
+ * transparent sheet in place.
+ * 
+ * Meant to be clipped onto the front and sides of a hairband to suspend a transparent
+ * sheet protector in front of the wearer. It is assumed there will be 3 attached to the
+ * visor (1 in front and 2 on the sides).
+ */
+
+PADDING = 0.01; // Constant padding value extending negative volumes to fix z-fighting
 
 use <clipComponent.scad>;
 
@@ -75,7 +85,9 @@ module arm(extrusionHeight, armParmList, clipParmList, clipRotationAngle) {
         translate([0, -rotationGapCover, 0])
         union() {
             cube([armsWidth, hypotenuse + rotationGapCover, extrusionHeight]);
-            translate([0, (hypotenuse + rotationGapCover) - (clipFrontWallTotalHeight - extrusionHeight), extrusionHeight])
+            translate([0, 
+                (hypotenuse + rotationGapCover) - (clipFrontWallTotalHeight - extrusionHeight),
+                extrusionHeight])
                 cornerSupport(clipFrontWallTotalHeight - extrusionHeight, armsWidth);
             translate([0, hypotenuse + rotationGapCover, 0])
                 cube([armsWidth, clipRotationGapCover, clipFrontWallTotalHeight]);
@@ -86,7 +98,8 @@ module arm(extrusionHeight, armParmList, clipParmList, clipRotationAngle) {
         }
 }
 
-module sheetHolder(extrusionHeight, frontBarParmList, spaceParmList, backBarParmList, armParmList, clipParmList, clipRotationAngle) {
+module sheetHolder(extrusionHeight, frontBarParmList, spaceParmList, backBarParmList,
+    armParmList, clipParmList, clipRotationAngle) {
     frontBarLength = frontBarParmList[0];
     frontBarWidth = frontBarParmList[1];
     
@@ -115,10 +128,11 @@ module sheetHolder(extrusionHeight, frontBarParmList, spaceParmList, backBarParm
         mirror([1, 0, 0])
         arm(extrusionHeight, armParmList, clipParmList, clipRotationAngle);
 }
-// Parameters
-$fn = 64; // global var controlling number of vertices in a cylinder
 
-// Sheet holder parameters
+// --- Parameters ---
+$fn = 64; // global variable controlling number of vertices in a cylinder
+
+// Sheet Holder Parameters
 sheetHolderHeight = 3;
 
 frontBarLength = 14;
@@ -142,7 +156,7 @@ spaceParmList = [spacerLength, spacerWidth];
 backBarParmList = [backBarLength, backBarWidth, backBarDeflection];
 armParmList = [armsHorizontalDistance, armsWidth, armsBackBarGap, armsClipGap];
 
-// Clip Component parameters
+// Clip Component Parameters
 clipWidth = 5;
 
 frontWallHeight = 5;
@@ -154,8 +168,8 @@ bottomThickness = 1.5;
 backWallHeight = 7;
 backWallThickness = 1.5;
 
-hookHeight = 3; // how much wall space the hook head occupies
-hookProtrusion = 1; // how far out the hook head extends
+hookHeight = 3; // how much back wall space the hook head occupies
+hookProtrusion = 1; // how far out the hook head extends horizontally
 hookBottomAngle = 45; // bottom angle of the hook off the wall (angle > 45 degrees may need supports)
 
 clipParmList = [
@@ -166,4 +180,6 @@ clipParmList = [
 // Integration Parameters
 clipRotationAngle = 0;
 
-sheetHolder(sheetHolderHeight, frontBarParmList, spaceParmList, backBarParmList, armParmList, clipParmList, clipRotationAngle);
+
+sheetHolder(sheetHolderHeight, frontBarParmList, spaceParmList, backBarParmList,
+    armParmList, clipParmList, clipRotationAngle);

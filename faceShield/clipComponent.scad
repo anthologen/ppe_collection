@@ -1,5 +1,14 @@
-// Single Hook Upright Clip Component 
-PADDING = 0.01; // For padding negative volumes to fix z-fighting
+/** 
+ * Single Hook Upright Clip Component 
+ * 
+ * A generic clip with a hook on one side.
+ * 
+ * This component is the interface between the hairband and the rest
+ * of the models. Intended to be printed in the upright position 
+ * so keep anisotropy in mind.
+ */
+
+PADDING = 0.01; // Constant padding value extending negative volumes to fix z-fighting
 
 module hookHead(hookHeight, hookProtrusion, hookBottomAngle, thickness) {
     linear_extrude(height=clipWidth)
@@ -30,6 +39,8 @@ module clipComponent(clipParmList) {
     hookProtusion = clipParmList[8];
     hookBottomAngle = clipParmList[9];
     
+    if (hookBottomAngle > 45) echo("WARNING: The hook may require supports");
+    
     // Front wall
     cube([clipWidth, frontWallThickness + spaceBetweenWalls + backWallThickness, bottomThickness]);
     // Bottom
@@ -38,7 +49,7 @@ module clipComponent(clipParmList) {
     // Back wall
     translate([0, frontWallThickness + spaceBetweenWalls, bottomThickness])
         cube([clipWidth, backWallThickness, backWallHeight]);
-    // Add rounded corner reinforcement for wall bending during clip insertion
+    // Add rounded corner reinforcement for wall bending during insertion into clip
     translate([0, frontWallThickness, bottomThickness])
         cornerReinforcement(spaceBetweenWalls, clipWidth);
     // Hook head
@@ -47,8 +58,8 @@ module clipComponent(clipParmList) {
         hookHead(hookHeight, hookProtrusion, hookBottomAngle, clipWidth);
 }
 
-// Parameters
-$fn = 16; // global var controlling number of vertices in a cylinder
+// --- Parameters ---
+$fn = 16; // global variable controlling number of vertices in a cylinder
 
 clipWidth = 5;
 
@@ -69,5 +80,6 @@ clipParmList = [
     clipWidth, frontWallHeight, frontWallThickness, spaceBetweenWalls, bottomThickness,
     backWallHeight, backWallThickness, hookHeight, hookProtrusion, hookBottomAngle
 ];
+
 
 clipComponent(clipParmList);
